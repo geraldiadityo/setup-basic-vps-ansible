@@ -1,0 +1,27 @@
+---
+- name: Host initial Setup
+  hosts: all
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Setting TimeZone
+      timezone:
+        name: Asia/Jakarta
+    - name: Setting Hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    - name: Install requirement
+      apt:
+        name:
+          - curl
+          - gnupg
+          - chrony
+          - rsync
+          - net-tools
+          - iotop
+          - sysstat
+        state: present
+        update_cache: true
+    - name: force ntp sync
+      shell:
+        cmd: "chronyc -a makestep"

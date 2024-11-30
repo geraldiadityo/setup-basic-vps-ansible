@@ -1,0 +1,9 @@
+all:
+  vars:
+    volume_path: "/home/{{ ansible.env.SUDO_USER or ansible_user_id }}/docker_volume"
+  hosts:
+    192.168.100.55:
+      ansible_user: geraldi
+      ansible_port: 10123
+      ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'SSHPASSWORD') }}"
+      ansible_become_password: "{{ lookup('ansible.builtin.env', 'SSHPASSWORD') }}"
